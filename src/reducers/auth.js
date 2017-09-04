@@ -1,18 +1,28 @@
-import { AUTH_PROGRESS } from '../actions/auth';
+import {
+  AUTH_PROGRESS,
+  AUTH_USER
+} from '../actions/auth';
 
 
 
 const initialState = {
-  inProgress: true,
-  user: null
+  inProgress: false,
+  user: null,
+  redirect: false
 };
 
-export function auth(state = initialState, action) {
-  switch(action) {
+export default function auth(state = initialState, action) {
+  switch(action.type) {
     case AUTH_PROGRESS:
       return {
         ...state,
-        inProgress: this.state.inProgress
+        inProgress: action.payload.inProgress
+      }
+
+    case AUTH_USER:
+      return {
+        ...state,
+        user: action.payload.user
       }
 
     default:

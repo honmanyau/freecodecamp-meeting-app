@@ -1,4 +1,4 @@
-import firebase from '../firebase';
+import firebase, { twitterAuthProvider } from '../firebase';
 
 
 
@@ -13,10 +13,35 @@ export function authListener() {
       if (user) {
         dispatch(authUser(user));
       }
-      else {
-        dispatch(authProgress(false));
-      }
+
+      dispatch(authProgress(false));
     });
+  }
+}
+
+export function twitterSignIn() {
+  return function(dispatch) {
+    let providerObject = null;
+
+    firebase.auth().signInWithRedirect(twitterAuthProvider)
+      .then((result) => {
+        if (result.user) {
+          dispatch(authUser(result.user));
+        }
+      })
+      .catch(error => console.log('Error occured when sining in with a third-party provider.', error));
+  }
+}
+
+export function signOut() {
+  return function(dispatch) {
+    dispatch(authProgress(true));
+
+    firebase.auth().signOut()
+      .then(() => {
+        dispatch(authUser(null));
+        dispatch(authProgress(false));
+      })
   }
 }
 
