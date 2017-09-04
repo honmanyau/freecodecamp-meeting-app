@@ -21,8 +21,6 @@ export function authListener() {
 
 export function twitterSignIn() {
   return function(dispatch) {
-    let providerObject = null;
-
     firebase.auth().signInWithRedirect(twitterAuthProvider)
       .then((result) => {
         if (result.user) {
