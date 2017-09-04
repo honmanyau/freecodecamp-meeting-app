@@ -1,17 +1,22 @@
-// React
 import React from 'react';
 import ReactDOM from 'react-dom';
-// Redux
 import { Provider } from 'react-redux';
+import { BrowserRouter, Route } from 'react-router-dom';
+
 import store from './store';
 
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+
+import Auth from './components/Auth';
 
 
 ReactDOM.render(
   <Provider store={store}>
-    <div>
-      index.js
-    </div>
+    <BrowserRouter>
+      <MuiThemeProvider>
+        <Auth />
+      </MuiThemeProvider>
+    </BrowserRouter>
   </Provider>,
   document.getElementById('root')
 );
