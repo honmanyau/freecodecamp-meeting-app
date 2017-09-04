@@ -1,7 +1,22 @@
+import firebase from '../firebase';
+
+
+
 export const FETCH_RESTAURANTS = 'FETCH_RESTAURANTS';
 export const FETCH_PROGRESS = 'FETCH_PROGRESS';
 export const STORE_FETCHED = 'STORE_FETCHED';
 export const RESTORE_FETCHED = 'RESTORE_FETCHED';
+export const STORE_USER_DATA = 'STORE_USER_DATA';
+
+export function fetchUserData(uid) {
+  return function(dispatch) {
+    firebase.database().ref(`/meeting-app/users/${uid}/old`).on('value', snapshot => {
+      if (snapshot) {
+        dispatch(storeUserData(snapshot.val()));
+      }
+    }, error => console.log('Error when fetching user data!', error));
+  }
+}
 
 export function fetchRestaurants(city) {
   return function(dispatch) {
@@ -46,6 +61,15 @@ export function storeFetched(data) {
 export function restoreFetched(data) {
   return {
     type: RESTORE_FETCHED,
+    payload: {
+      data
+    }
+  }
+}
+
+export function storeUserData(data) {
+  return {
+    type: STORE_USER_DATA,
     payload: {
       data
     }

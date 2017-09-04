@@ -2,6 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
+import * as SubscribeActions from '../actions/subscribe';
+
 import RaisedButton from 'material-ui/RaisedButton';
 
 
@@ -11,11 +13,11 @@ class RestaurantSubtitle extends React.Component {
     const divStyles = {
       display: 'flex',
       flexDirection: 'column'
-    }
+    };
 
     const buttonDivStyle = {
       marginTop: '5px'
-    }
+    };
 
     return(
       <div style={divStyles}>
@@ -26,6 +28,7 @@ class RestaurantSubtitle extends React.Component {
               <RaisedButton
                 primary
                 label='0 Going'
+                onClick={() => this.props.actions.submitSubscription(this.props.rid, this.props.auth.user.uid, true)}
               />
               :
               null
@@ -43,7 +46,9 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return
+  return {
+    actions: bindActionCreators(SubscribeActions, dispatch)
+  }
 }
 
-export default connect(mapStateToProps, null)(RestaurantSubtitle);
+export default connect(mapStateToProps, mapDispatchToProps)(RestaurantSubtitle);

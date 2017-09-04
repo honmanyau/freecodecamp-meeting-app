@@ -1,5 +1,7 @@
 import firebase, { twitterAuthProvider } from '../firebase';
 
+import { fetchUserData } from './fetch';
+
 
 
 export const AUTH_USER = 'AUTH_USER';
@@ -12,6 +14,7 @@ export function authListener() {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         dispatch(authUser(user));
+        dispatch(fetchUserData(user.uid));
       }
 
       dispatch(authProgress(false));
