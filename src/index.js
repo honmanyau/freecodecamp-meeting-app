@@ -10,6 +10,8 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Auth from './components/Auth';
 import Main from './components/Main';
 
+import notes from './notes';
+
 
 
 ReactDOM.render(

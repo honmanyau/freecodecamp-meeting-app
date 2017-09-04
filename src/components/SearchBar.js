@@ -19,7 +19,10 @@ class SearchBar extends React.Component {
 
   handleSearchTextFieldKeyPress(event) {
     if (event.key === 'Enter') {
-      window.localStorage.setItem('https://freecodecamp-meet.glitch.com', {searchString: this.state.searchString});
+      const storageKey = 'customLocalStorage@https://freecodecamp-meet.glitch.me';
+      window.localStorage.setItem(storageKey, JSON.stringify({searchString: this.state.searchString}));
+
+      console.log(JSON.parse(window.localStorage.getItem(storageKey)).searchString);
 
       this.props.actions.fetchRestaurants(this.state.searchString);
     }
@@ -61,10 +64,16 @@ class SearchBar extends React.Component {
   }
 }
 
+const mapStateToProps = (state) => {
+  return {
+    fetch: state.fetch
+  }
+}
+
 const mapDispatchToProps = (dispatch) => {
   return {
     actions: bindActionCreators(FetchActions, dispatch)
   }
 }
 
-export default connect(null, mapDispatchToProps)(SearchBar);
+export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);

@@ -1,6 +1,7 @@
 import {
   FETCH_PROGRESS,
-  STORE_FETCHED
+  STORE_FETCHED,
+  RESTORE_FETCHED
 } from '../actions/fetch';
 
 
@@ -19,6 +20,12 @@ export default function fetch(state = initialState, action) {
       };
 
     case STORE_FETCHED:
+      return {
+        ...state,
+        data: action.payload.data
+      }
+
+    case RESTORE_FETCHED:
       return {
         ...state,
         data: action.payload.data
