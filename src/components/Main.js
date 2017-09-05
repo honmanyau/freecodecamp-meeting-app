@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { Card, CardText } from 'material-ui/Card';
+import { Card, CardText, CardTitle } from 'material-ui/Card';
 
 import SearchBar from './SearchBar';
 import Restaurant from './Restaurant';
@@ -9,6 +9,8 @@ import Restaurant from './Restaurant';
 
 class Main extends React.Component {
   render() {
+    const userData = this.props.fetch.userData;
+    console.log(userData, userData ? {...userData.data, id: userData.rid} : null)
     let businesses = null;
 
     if (!this.props.fetch.inProgress && this.props.fetch.data) {
@@ -22,9 +24,30 @@ class Main extends React.Component {
         <CardText>
           <SearchBar />
         </CardText>
-        <CardText>
-          {businesses}
-        </CardText>
+
+        {
+          userData ?
+            <div>
+              <CardTitle
+                titleStyle={{marginBottom: '10px'}}
+                title="My plan for tonight:"
+                children={<Restaurant data={{...userData.data, id: userData.rid}}/>}
+              />
+            </div>
+            :
+            null
+        }
+
+        {
+          businesses ?
+            <CardTitle
+              titleStyle={{marginBottom: '10px'}}
+              title="Restaurants near you:"
+              children={businesses}
+            />
+            :
+            null
+        }
       </Card>
     )
   }

@@ -20,7 +20,8 @@ class RestaurantSubtitle extends React.Component {
   }
 
   componentDidMount() {
-    firebase.database().ref('/meeting-app/restaurants/').child(this.props.rid).on('value', snapshot => {
+    console.log("WUUUUT?", this.props.data.id)
+    firebase.database().ref('/meeting-app/restaurants/').child(this.props.data.id).on('value', snapshot => {
       if (snapshot.val()) {
         this.setState({
           going: snapshot.val().count
@@ -58,9 +59,17 @@ class RestaurantSubtitle extends React.Component {
                   primary={!subscribing}
                   disabled={subscribing}
                   label={subscribing ? 'UPDATING' : this.state.going + ' Going'}
-                  onClick={() => this.props.actions.submitSubscription(this.props.rid, this.props.auth.user.uid, true)}
+                  onClick={() => this.props.actions.submitSubscription(
+                    this.props.data.id,
+                    this.props.auth.user.uid,
+                    true, {
+                      name: this.props.data.name,
+                      image_url: this.props.data.image_url,
+                      url: this.props.data.url,
+                      categories: this.props.data.categories
+                    })}
                 />
-                {this.props.fetch.userData.rid === this.props.rid ? ' (I\'m going!)' : null}
+                {this.props.fetch.userData ? (this.props.fetch.userData.rid === this.props.data.id ? ' (Including me!)' : null) : null}
               </div>
               :
               null

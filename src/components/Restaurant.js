@@ -21,6 +21,7 @@ class Restaurant extends React.Component {
           subtitle={
             <RestaurantSubtitle
               rid={business.id}
+              data={business}
               subtitle={business.categories.map(category => category.title).join(', ')}
             />
           }

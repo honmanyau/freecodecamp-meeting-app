@@ -66,7 +66,7 @@ class SearchBar extends React.Component {
           hintStyle={{textAlign: 'center', width: '100%'}}
           type='text'
           value={this.state.searchString}
-          hintText={this.props.auth.inProgress ? 'Signing in' : 'Enter a city name'}
+          hintText={this.props.auth.inProgress ? 'Retrieving results' : 'Enter a city name'}
           onChange={event => this.setState({searchString: event.target.value})}
           onKeyPress={event => this.handleSearchTextFieldKeyPress(event)}
         />
