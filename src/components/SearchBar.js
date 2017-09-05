@@ -6,6 +6,7 @@ import firebase from '../firebase';
 import * as FetchActions from '../actions/fetch';
 
 import TextField from 'material-ui/TextField';
+import yelpLogo from '../images/Yelp_trademark_RGB.png';
 
 
 
@@ -48,14 +49,15 @@ class SearchBar extends React.Component {
       flexDirection: 'column',
       alignItems: 'center'
     };
-
     const attributionStyles = {
+      display: 'flex',
+      alignItems: 'center',
       fontSize: '9pt',
       color: '#777'
-    }
 
-    const attributionLinkStyles = {
-      color: '#555'
+    }
+    const attributionLogoStyles = {
+      height: '30px'
     }
 
     return(
@@ -72,7 +74,7 @@ class SearchBar extends React.Component {
         />
 
         <div style={attributionStyles}>
-          Search results powdered by <a style={attributionLinkStyles} href="https://www.yelp.com">YELP</a>!
+          Search results powdered by <a href="https://www.yelp.com"><img style={attributionLogoStyles} alt="Yelp!" src={yelpLogo} /></a>
         </div>
       </div>
     )
