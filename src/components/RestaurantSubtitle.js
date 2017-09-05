@@ -6,10 +6,37 @@ import * as SubscribeActions from '../actions/subscribe';
 
 import RaisedButton from 'material-ui/RaisedButton';
 
+import firebase from '../firebase';
+
 
 
 class RestaurantSubtitle extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      going: '--'
+    }
+  }
+
+  componentDidMount() {
+    firebase.database().ref('/meeting-app/restaurants/').child(this.props.rid).on('value', snapshot => {
+      if (snapshot.val()) {
+        console.log(snapshot.val())
+        this.setState({
+          going: snapshot.val().count
+        });
+      }
+      else if (!snapshot.val()){
+        this.setState({
+          going: 0
+        });
+      }
+    });
+  }
+
   render() {
+    console.log(this.state.going);
     const divStyles = {
       display: 'flex',
       flexDirection: 'column'
@@ -27,7 +54,7 @@ class RestaurantSubtitle extends React.Component {
             this.props.auth.user ?
               <RaisedButton
                 primary
-                label='0 Going'
+                label={this.state.going + ' Going'}
                 onClick={() => this.props.actions.submitSubscription(this.props.rid, this.props.auth.user.uid, true)}
               />
               :
