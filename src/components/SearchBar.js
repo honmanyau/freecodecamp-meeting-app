@@ -66,9 +66,11 @@ class SearchBar extends React.Component {
           disabled={this.props.auth.inProgress ? true : false}
           inputStyle={{textAlign: 'center'}}
           hintStyle={{textAlign: 'center', width: '100%'}}
+          errorStyle={{textAlign: 'center'}}
           type='text'
           value={this.state.searchString}
           hintText={this.props.auth.inProgress ? 'Retrieving results' : 'Enter a city name'}
+          errorText={this.props.fetch.data ? (this.props.fetch.data.error ? 'Please enter a valid city name.' : null) : null}
           onChange={event => this.setState({searchString: event.target.value})}
           onKeyPress={event => this.handleSearchTextFieldKeyPress(event)}
         />

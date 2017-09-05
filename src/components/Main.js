@@ -13,9 +13,11 @@ class Main extends React.Component {
     let businesses = null;
 
     if (!this.props.fetch.inProgress && this.props.fetch.data) {
-      businesses = this.props.fetch.data.businesses.map((business, index) => {
-        return <Restaurant key={index} data={business} />
-      });
+      if (!this.props.fetch.data.error) {
+        businesses = this.props.fetch.data.businesses.map((business, index) => {
+          return <Restaurant key={index} data={business} />
+        });
+      }
     }
 
     return(
