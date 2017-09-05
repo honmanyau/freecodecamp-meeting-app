@@ -10,7 +10,6 @@ import Restaurant from './Restaurant';
 class Main extends React.Component {
   render() {
     const userData = this.props.fetch.userData;
-    console.log(userData, userData ? {...userData.data, id: userData.rid} : null)
     let businesses = null;
 
     if (!this.props.fetch.inProgress && this.props.fetch.data) {

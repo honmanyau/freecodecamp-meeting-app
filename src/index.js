@@ -9,6 +9,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import Auth from './components/Auth';
 import Main from './components/Main';
+import Footer from './components/Footer';
 
 import notes from './notes';
 
@@ -21,6 +22,7 @@ ReactDOM.render(
         <div>
           <Auth />
           <Main />
+          <Footer />
         </div>
       </MuiThemeProvider>
     </BrowserRouter>

@@ -20,7 +20,6 @@ class RestaurantSubtitle extends React.Component {
   }
 
   componentDidMount() {
-    console.log("WUUUUT?", this.props.data.id)
     firebase.database().ref('/meeting-app/restaurants/').child(this.props.data.id).on('value', snapshot => {
       if (snapshot.val()) {
         this.setState({
