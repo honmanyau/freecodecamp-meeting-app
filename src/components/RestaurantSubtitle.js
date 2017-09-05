@@ -22,7 +22,6 @@ class RestaurantSubtitle extends React.Component {
   componentDidMount() {
     firebase.database().ref('/meeting-app/restaurants/').child(this.props.rid).on('value', snapshot => {
       if (snapshot.val()) {
-        console.log(snapshot.val())
         this.setState({
           going: snapshot.val().count
         });
@@ -32,19 +31,21 @@ class RestaurantSubtitle extends React.Component {
           going: 0
         });
       }
+
+      this.props.actions.submitting(false);
     });
   }
 
   render() {
-    console.log(this.state.going);
     const divStyles = {
       display: 'flex',
       flexDirection: 'column'
     };
-
     const buttonDivStyle = {
       marginTop: '5px'
     };
+
+    const subscribing = this.props.subscribe.inProgress;
 
     return(
       <div style={divStyles}>
@@ -52,11 +53,15 @@ class RestaurantSubtitle extends React.Component {
         <div style={buttonDivStyle}>
           {
             this.props.auth.user ?
-              <RaisedButton
-                primary
-                label={this.state.going + ' Going'}
-                onClick={() => this.props.actions.submitSubscription(this.props.rid, this.props.auth.user.uid, true)}
-              />
+              <div>
+                <RaisedButton
+                  primary={!subscribing}
+                  disabled={subscribing}
+                  label={subscribing ? 'UPDATING' : this.state.going + ' Going'}
+                  onClick={() => this.props.actions.submitSubscription(this.props.rid, this.props.auth.user.uid, true)}
+                />
+                {this.props.fetch.userData.rid === this.props.rid ? ' (I\'m going!)' : null}
+              </div>
               :
               null
           }
@@ -68,7 +73,9 @@ class RestaurantSubtitle extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    auth: state.auth
+    auth: state.auth,
+    fetch: state.fetch,
+    subscribe: state.subscribe
   }
 }
 

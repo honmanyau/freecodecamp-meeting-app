@@ -14,7 +14,7 @@ export function fetchUserData(uid) {
       if (snapshot) {
         dispatch(storeUserData(snapshot.val()));
       }
-    }, error => console.log('Error when fetching user data!', error));
+    }, error => console.log('**This is not an error if you have just signed out.  Otherwise, an error has occured when fetching user data!', error));
   }
 }
 

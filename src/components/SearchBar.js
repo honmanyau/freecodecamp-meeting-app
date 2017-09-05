@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
+import firebase from '../firebase';
 import * as FetchActions from '../actions/fetch';
 
 import TextField from 'material-ui/TextField';
@@ -12,17 +13,30 @@ class SearchBar extends React.Component {
   constructor(props) {
     super(props);
 
+    this.storageKey = 'customLocalStorage@https://freecodecamp-meet.glitch.me';
+
     this.state = {
       searchString: ''
     }
   }
 
+  componentDidMount() {
+    firebase.auth().getRedirectResult().then(result => {
+      if (result.user) {
+        const searchString = JSON.parse(window.localStorage.getItem(this.storageKey)).searchString;
+
+        this.setState({
+          searchString
+        })
+
+        this.props.actions.fetchRestaurants(searchString);
+      }
+    });
+  }
+
   handleSearchTextFieldKeyPress(event) {
     if (event.key === 'Enter') {
-      const storageKey = 'customLocalStorage@https://freecodecamp-meet.glitch.me';
-      window.localStorage.setItem(storageKey, JSON.stringify({searchString: this.state.searchString}));
-
-      console.log(JSON.parse(window.localStorage.getItem(storageKey)).searchString);
+      window.localStorage.setItem(this.storageKey, JSON.stringify({searchString: this.state.searchString}));
 
       this.props.actions.fetchRestaurants(this.state.searchString);
     }
@@ -47,11 +61,12 @@ class SearchBar extends React.Component {
     return(
       <div style={textFieldStyles}>
         <TextField
+          disabled={this.props.auth.inProgress ? true : false}
           inputStyle={{textAlign: 'center'}}
           hintStyle={{textAlign: 'center', width: '100%'}}
           type='text'
           value={this.state.searchString}
-          hintText='Enter a city name'
+          hintText={this.props.auth.inProgress ? 'Signing in' : 'Enter a city name'}
           onChange={event => this.setState({searchString: event.target.value})}
           onKeyPress={event => this.handleSearchTextFieldKeyPress(event)}
         />
@@ -66,6 +81,7 @@ class SearchBar extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
+    auth: state.auth,
     fetch: state.fetch
   }
 }
