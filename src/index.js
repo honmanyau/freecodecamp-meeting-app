@@ -11,8 +11,6 @@ import Auth from './components/Auth';
 import Main from './components/Main';
 import Footer from './components/Footer';
 
-import notes from './notes';
-
 
 
 ReactDOM.render(

@@ -1,2 +1,2 @@
 ## freeCodeCamp Project—Build a Nightlife Coordination App
-This meeting app was created in fulfilment of the Build a Nightlife Coordination App project of the freeCodeCamp Curriculum.
+This meeting app was created in fulfilment of the Build a Nightlife Coordination App project of the freeCodeCamp Curriculum and originally submitted on 2017.09.05.  A demo can be found [here](https://freecodecamp-meet.glitch.me/).  Please kindly note that the app is currently not mobile friendly.  Some operations that involves Cloud Functions could take 10—15 seconds to initialise (cold start).
