@@ -22,7 +22,7 @@ export function fetchRestaurants(city) {
   return function(dispatch) {
     dispatch(fetchProgress(true));
 
-    const url = `https://freecodecamp-api.glitch.me/api/yelp/${city}`;
+    const url = `https://freecodecamp-meet.glitch.me/api/yelp/${city}`;
 
     fetch(url)
       .then(response => {
